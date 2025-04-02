@@ -14,6 +14,7 @@ export interface PostData {
   readTime: string;
   excerpt: string;
   tags: string[];
+  references?: Record<string, string>;
 }
 
 export interface PostPreview {
@@ -23,6 +24,7 @@ export interface PostPreview {
   readTime: string;
   excerpt: string;
   tags: string[];
+  hasCitations: boolean;
 }
 
 export function getSortedPostsData(): PostPreview[] {
@@ -38,6 +40,10 @@ export function getSortedPostsData(): PostPreview[] {
 
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents)
+    
+    // Check if the post has references
+    const hasCitations = !!matterResult.data.references && 
+      Object.keys(matterResult.data.references).length > 0;
 
     // Ensure tags exist and are in array format
     const tags = matterResult.data.tags 
@@ -54,6 +60,7 @@ export function getSortedPostsData(): PostPreview[] {
       readTime: matterResult.data.readTime as string,
       excerpt: matterResult.data.excerpt as string,
       tags,
+      hasCitations
     }
   })
   // Sort posts by date
@@ -84,28 +91,25 @@ export async function getPostData(id: string): Promise<PostData> {
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents)
 
-  // Ensure tags exist and are in array format
-  const tags = matterResult.data.tags 
-    ? Array.isArray(matterResult.data.tags) 
-      ? matterResult.data.tags 
-      : [matterResult.data.tags]
-    : []
-
   // Use remark to convert markdown into HTML string
   const processedContent = await remark()
     .use(html)
     .process(matterResult.content)
   const contentHtml = processedContent.toString()
 
+  // Get references from frontmatter if they exist
+  const references = matterResult.data.references || {}
+
   // Combine the data with the id and contentHtml
   return {
     id,
     contentHtml,
+    references,
     title: matterResult.data.title as string,
     date: matterResult.data.date as string,
     readTime: matterResult.data.readTime as string,
     excerpt: matterResult.data.excerpt as string,
-    tags,
+    tags: matterResult.data.tags || [],
   }
 }
 
@@ -138,4 +142,16 @@ export function getPostsByTag(tag: string): PostPreview[] {
   return allPosts.filter(post => 
     post.tags.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
   );
+}
+
+// Add this function to get all references for a post
+export async function getPostReferences(id: string): Promise<Record<string, string>> {
+  const fullPath = path.join(postsDirectory, `${id}.md`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+  // Use gray-matter to parse the post metadata section
+  const matterResult = matter(fileContents);
+  
+  // Return references from frontmatter if they exist
+  return matterResult.data.references || {};
 } 

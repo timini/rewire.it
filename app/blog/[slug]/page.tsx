@@ -62,11 +62,32 @@ export async function generateStaticParams() {
   return paths
 }
 
+// Function to process citation references in the content
+function processCitations(content: string, references: Record<string, string>) {
+  // Pattern to match citation references like [1], [13], etc.
+  const citationPattern = /\[(\d+)\]/g;
+  
+  // Replace each citation with a proper link
+  return content.replace(citationPattern, (match, referenceNumber) => {
+    const externalUrl = references[referenceNumber];
+    if (externalUrl) {
+      return `<a href="${externalUrl}" target="_blank" rel="noopener noreferrer" class="citation-link">${match}</a>`;
+    }
+    // If no URL is found for this reference, keep it as is
+    return match;
+  });
+}
+
 // Define the page component with improved semantic HTML and structured data
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   let post;
   try {
     post = await getPostData(params.slug)
+    
+    // Process citations if post has references
+    if (post.references) {
+      post.contentHtml = processCitations(post.contentHtml, post.references);
+    }
   } catch (error) {
     // If getPostData throws (e.g., file not found), trigger a 404
     notFound()
@@ -148,6 +169,28 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               dangerouslySetInnerHTML={{ __html: post.contentHtml }}
               itemProp="articleBody"
             />
+            
+            {/* References section */}
+            {post.references && Object.keys(post.references).length > 0 && (
+              <div className="mt-12 pt-6 border-t border-gray-100">
+                <h2 className="text-2xl font-bold mb-4 font-montserrat">References</h2>
+                <ol className="list-decimal list-inside space-y-2 pl-4">
+                  {Object.entries(post.references).map(([number, url]) => (
+                    <li key={number} id={`ref-${number}`} className="text-gray-700">
+                      <span className="font-medium">[{number}]</span>{' '}
+                      <a 
+                        href={url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:underline"
+                      >
+                        {url}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
             
             <footer className="mt-10 pt-6 border-t border-gray-100">
               <div className="mb-4">
