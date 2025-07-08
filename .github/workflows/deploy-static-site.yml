@@ -53,5 +53,8 @@ jobs:
     - name: Configure static website hosting
       run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-main-page-suffix=index.html --web-error-page=404.html
 
-    - name: Output public URL
-      run: echo "Successfully deployed! View your site at https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}" 
+    - name: Create Deployment Summary
+      run: |
+        echo "## Deployment Successful 🎉" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**View live site:** [https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}](https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }})" >> $GITHUB_STEP_SUMMARY 
