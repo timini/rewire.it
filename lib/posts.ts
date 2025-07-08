@@ -84,6 +84,19 @@ export function getAllPostIds() {
   })
 }
 
+/**
+ * For the App Router's generateStaticParams.
+ * Returns an array of objects like: [{ slug: 'post-1' }, { slug: 'post-2' }]
+ */
+export function getAllPostSlugs() {
+  const fileNames = fs.readdirSync(postsDirectory)
+  return fileNames.map((fileName) => {
+    return {
+      slug: fileName.replace(/\.md$/, ''),
+    }
+  })
+}
+
 export async function getPostData(id: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')

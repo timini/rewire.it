@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
-import { getAllPostIds, getPostData } from '@/lib/posts'
+import { getAllPostSlugs, getPostData } from '@/lib/posts'
 import type { Metadata } from 'next'
 import JSONLD from '@/components/jsonld'
 import Tag from '@/components/tag'
@@ -60,10 +60,7 @@ export const dynamicParams = true;
 
 // Define generateStaticParams function
 export async function generateStaticParams() {
-  const paths = getAllPostIds()
-  // The paths returned by getAllPostIds are already in the correct format
-  // { params: { slug: '...' } }
-  return paths
+  return getAllPostSlugs();
 }
 
 // Function to process citation references in the content
