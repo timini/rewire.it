@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         canonical: `https://rewire.it/blog/${params.slug}`,
       }
     }
-  } catch (error) {
+  } catch {
     // Handle case where post is not found during metadata generation
     return {
       title: "Post Not Found - rewire.it Blog",
@@ -53,6 +53,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   }
 }
+
+// Allow Next.js to dynamically render pages for slugs not generated at build time.
+// This is useful for previewing new posts in development.
+export const dynamicParams = true;
 
 // Define generateStaticParams function
 export async function generateStaticParams() {
@@ -88,7 +92,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
     if (post.references) {
       post.contentHtml = processCitations(post.contentHtml, post.references);
     }
-  } catch (error) {
+  } catch {
     // If getPostData throws (e.g., file not found), trigger a 404
     notFound()
   }

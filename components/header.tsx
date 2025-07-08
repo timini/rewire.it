@@ -66,7 +66,7 @@ export default function Header() {
                 </svg>
               </Link>
               <Link 
-                href="https://github.com" 
+                href="https://github.com/timini" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-700 hover:text-purple-600 transition-colors"
@@ -128,7 +128,7 @@ export default function Header() {
                 </svg>
               </Link>
               <Link 
-                href="https://github.com" 
+                href="https://github.com/timini" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-700 hover:text-purple-600 transition-colors"
