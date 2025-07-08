@@ -53,8 +53,15 @@ jobs:
     - name: Configure static website hosting
       run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-main-page-suffix=index.html --web-error-page=404.html
 
+    - name: Generate Shortened URL
+      id: shorten_url
+      run: |
+        LONG_URL="https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}"
+        SHORT_URL=$(curl -s "https://tinyurl.com/api-create.php?url=${LONG_URL}")
+        echo "short_url=${SHORT_URL}" >> $GITHUB_OUTPUT
+
     - name: Create Deployment Summary
       run: |
         echo "## Deployment Successful 🎉" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**View live site:** [https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}](https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }})" >> $GITHUB_STEP_SUMMARY 
+        echo "**View live site:** ${{ steps.shorten_url.outputs.short_url }}" >> $GITHUB_STEP_SUMMARY 
