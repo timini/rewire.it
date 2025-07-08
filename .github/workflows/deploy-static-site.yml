@@ -56,7 +56,7 @@ jobs:
     - name: Generate Shortened URL
       id: shorten_url
       run: |
-        LONG_URL="https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}"
+        LONG_URL="https://c.storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}"
         SHORT_URL=$(curl -s "https://tinyurl.com/api-create.php?url=${LONG_URL}")
         echo "short_url=${SHORT_URL}" >> $GITHUB_OUTPUT
 
