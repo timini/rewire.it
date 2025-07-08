@@ -47,5 +47,11 @@ jobs:
         destination: '${{ secrets.GCP_BUCKET_NAME }}' # The GCS bucket to deploy to
         glob: '**' # Upload all files in the source directory
 
-    - name: Output deployment URL
-      run: echo "Successfully deployed to gs://${{ secrets.GCP_BUCKET_NAME }}" 
+    - name: Make bucket contents public
+      run: gcloud storage buckets add-iam-policy-binding gs://${{ secrets.GCP_BUCKET_NAME }} --member=allUsers --role=roles/storage.objectViewer
+
+    - name: Configure static website hosting
+      run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-main-page-suffix=index.html --web-error-page=404.html
+
+    - name: Output public URL
+      run: echo "Successfully deployed! View your site at https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}" 
