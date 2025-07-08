@@ -103,6 +103,15 @@ fi
 
 echo "Granting storage permissions to the service account..."
 gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" --member="serviceAccount:$SERVICE_ACCOUNT_EMAIL" --role="roles/storage.admin"
+echo "✅ Granted Storage Admin role to service account for bucket access."
+
+# Grant the Service Account Token Creator role to the service account on itself
+echo "🔐 Granting Service Account Token Creator role to the service account..."
+gcloud iam service-accounts add-iam-policy-binding $SERVICE_ACCOUNT_EMAIL \
+    --member="serviceAccount:$SERVICE_ACCOUNT_EMAIL" \
+    --role="roles/iam.serviceAccountTokenCreator"
+echo "✅ Granted Service Account Token Creator role."
+
 echo "Service account configured."
 echo "--------------------------------------------------"
 

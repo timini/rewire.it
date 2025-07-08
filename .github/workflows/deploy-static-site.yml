@@ -51,7 +51,7 @@ jobs:
       run: gcloud storage buckets add-iam-policy-binding gs://${{ secrets.GCP_BUCKET_NAME }} --member=allUsers --role=roles/storage.objectViewer
 
     - name: Configure static website hosting
-      run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-main-page-suffix=index.html --web-error-page=404.html
+      run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-config-file=web-config.json
 
     - name: Generate Shortened URL
       id: shorten_url
