@@ -1,12 +1,9 @@
-import React from 'react'
+import Script from "next/script"
 
-interface JSONLDProps {
-  data: Record<string, any>
-}
-
-export default function JSONLD({ data }: JSONLDProps) {
+export default function JSONLD({ data }: { data: Record<string, unknown> }) {
   return (
-    <script
+    <Script 
+      id="json-ld"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />

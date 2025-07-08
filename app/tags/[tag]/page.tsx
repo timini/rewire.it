@@ -110,7 +110,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
               #{displayTag}
             </h1>
             <p className="text-white/80 mb-2">
-              {posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged with "{displayTag}"
+              {posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged with &quot;{displayTag}&quot;
             </p>
           </div>
         </div>
