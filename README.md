@@ -1,3 +1,11 @@
+# rewire.it - Personal Blog & Portfolio
+
+This is the repository for my personal website, [rewire.it](https://rewire.it). It's built with Next.js and Tailwind CSS, and deployed as a static site to Google Cloud Storage.
+
+## CI/CD
+
+This repository is configured with a GitHub Actions workflow to automatically build and deploy the static site to a GCS bucket upon pushes to the `main` branch.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
