@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}
+      url: ${{ steps.get_url.outputs.url }}
     
     # Add 'id-token' with 'write' permission for authenticating to GCP
     permissions:
@@ -19,6 +19,10 @@ jobs:
       id-token: 'write'
 
     steps:
+    - name: Get deployment URL
+      id: get_url
+      run: echo "url=https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}" >> $GITHUB_OUTPUT
+
     - name: Checkout Repository
       uses: actions/checkout@v4
 
