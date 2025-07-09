@@ -37,3 +37,14 @@ next-env.d.ts
 .qodo
 
 .early.coverage
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*.backup
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+.terraformrc
+terraform.rc
