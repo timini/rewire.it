@@ -48,3 +48,6 @@ override.tf
 override.tf.json
 .terraformrc
 terraform.rc
+
+# Explicitly ignore problematic state file
+terraform/terraform.tfstate.backup
