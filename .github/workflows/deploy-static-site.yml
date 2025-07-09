@@ -47,11 +47,11 @@ jobs:
         destination: '${{ secrets.GCP_BUCKET_NAME }}' # The GCS bucket to deploy to
         glob: '**' # Upload all files in the source directory
 
-    - name: Make bucket contents public
-      run: gcloud storage buckets add-iam-policy-binding gs://${{ secrets.GCP_BUCKET_NAME }} --member=allUsers --role=roles/storage.objectViewer
-
-    - name: Configure static website hosting
-      run: gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} --web-config-file=web-config.json
+    - name: 'Configure GCS bucket for website hosting'
+      run: |
+        gcloud storage buckets update gs://${{ secrets.GCP_BUCKET_NAME }} \
+          --website-main-page-suffix=index.html \
+          --website-not-found-page=404.html
 
     - name: Generate Shortened URL
       id: shorten_url
