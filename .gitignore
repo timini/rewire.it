@@ -40,14 +40,10 @@ next-env.d.ts
 
 # Terraform
 .terraform/
-*.tfstate
-*.tfstate.*.backup
+terraform.tfstate
+terraform.tfstate.backup
 *.tfvars
-*.tfvars.json
-override.tf
-override.tf.json
-.terraformrc
-terraform.rc
+.terraform.lock.hcl
 
 # Explicitly ignore problematic state file
 terraform/terraform.tfstate.backup
