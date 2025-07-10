@@ -95,4 +95,11 @@ resource "google_storage_bucket_iam_member" "public_access" {
   bucket = google_storage_bucket.website_bucket.name
   role   = "roles/storage.objectViewer"
   member = "allUsers"
+}
+
+# 9. Allow the service account to create access tokens for itself
+resource "google_service_account_iam_member" "token_creator_self" {
+  service_account_id = google_service_account.github_actions_sa.name
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${google_service_account.github_actions_sa.email}"
 } 
