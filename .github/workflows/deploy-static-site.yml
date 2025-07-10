@@ -35,7 +35,7 @@ jobs:
       id: auth
       uses: 'google-github-actions/auth@v2'
       with:
-        workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/${{ secrets.GCP_WORKLOAD_IDENTITY_POOL_ID }}/providers/${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_ID }}'
+        workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
         service_account: '${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}' # e.g. my-service-account@my-project.iam.gserviceaccount.com
         # The project_id is required by some downstream actions.
         # In our setup, the GCS bucket name is the same as the project ID.
