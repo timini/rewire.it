@@ -32,7 +32,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -backend-config="impersonate_service_account=${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}"
       working-directory: terraform
 
     - name: Terraform Validate
