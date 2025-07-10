@@ -1,4 +1,4 @@
-name: Build and Deploy to GCS
+name: Build, Deploy, and Provision Infrastructure
 
 on:
   push:
@@ -19,6 +19,35 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: 'google-github-actions/auth@v2'
+      with:
+        workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+        service_account: '${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}'
+        project_id: '${{ secrets.GCP_BUCKET_NAME }}'
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      working-directory: terraform
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+      working-directory: terraform
+    
+    - name: Terraform Apply
+      id: apply
+      run: terraform apply -auto-approve -no-color
+      working-directory: terraform
+      env:
+        TF_VAR_project_id: ${{ secrets.GCP_BUCKET_NAME }}
+        TF_VAR_github_repo: ${{ github.repository }}
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -31,16 +60,6 @@ jobs:
     - name: Build Static Site
       run: npm run build
 
-    - name: Authenticate to Google Cloud
-      id: auth
-      uses: 'google-github-actions/auth@v2'
-      with:
-        workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
-        service_account: '${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}' # e.g. my-service-account@my-project.iam.gserviceaccount.com
-        # The project_id is required by some downstream actions.
-        # In our setup, the GCS bucket name is the same as the project ID.
-        project_id: '${{ secrets.GCP_BUCKET_NAME }}'
-    
     - name: Deploy to Google Cloud Storage
       id: deploy
       uses: 'google-github-actions/upload-cloud-storage@v2.2.0'

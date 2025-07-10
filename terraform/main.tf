@@ -84,4 +84,11 @@ resource "google_storage_bucket_iam_member" "storage_admin" {
   bucket = google_storage_bucket.website_bucket.name
   role   = "roles/storage.admin"
   member = "serviceAccount:${google_service_account.github_actions_sa.email}"
+}
+
+# 8. Grant public read access to all objects in the bucket
+resource "google_storage_bucket_iam_member" "public_access" {
+  bucket = google_storage_bucket.website_bucket.name
+  role   = "roles/storage.objectViewer"
+  member = "allUsers"
 } 
