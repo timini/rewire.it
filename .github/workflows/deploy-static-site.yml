@@ -31,6 +31,10 @@ jobs:
     - name: Build Static Site
       run: npm run build
 
+    - name: Debug Secrets
+      run: |
+        echo "WIF Provider Secret: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}"
+
     - name: Authenticate to Google Cloud
       id: auth
       uses: 'google-github-actions/auth@v2'
