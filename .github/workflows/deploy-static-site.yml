@@ -31,10 +31,6 @@ jobs:
     - name: Build Static Site
       run: npm run build
 
-    - name: Debug Secrets
-      run: |
-        echo "WIF Provider Secret: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}"
-
     - name: Authenticate to Google Cloud
       id: auth
       uses: 'google-github-actions/auth@v2'
@@ -54,8 +50,15 @@ jobs:
         destination: '${{ secrets.GCP_BUCKET_NAME }}' # The GCS bucket to deploy to
         glob: '**' # Upload all files in the source directory
 
+    - name: Generate Short URL
+      id: shorten_url
+      run: |
+        FULL_URL="https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}/index.html"
+        SHORT_URL=$(curl -s https://tinyurl.com/api-create.php?url="$FULL_URL")
+        echo "SHORT_URL=$SHORT_URL" >> $GITHUB_OUTPUT
+
     - name: Create Deployment Summary
       run: |
         echo "## Deployment Successful 🎉" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**View live site:** https://storage.googleapis.com/${{ secrets.GCP_BUCKET_NAME }}/index.html" >> $GITHUB_STEP_SUMMARY 
+        echo "**View live site:** ${{ steps.shorten_url.outputs.SHORT_URL }}" >> $GITHUB_STEP_SUMMARY 
