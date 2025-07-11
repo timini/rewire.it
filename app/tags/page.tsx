@@ -57,7 +57,7 @@ export default function TagsIndexPage() {
       <JSONLD data={jsonLd} />
       <div className="max-w-4xl mx-auto py-8">
         <div className="bg-white rounded-lg shadow-md overflow-hidden p-6 sm:p-8 mb-8">
-          <Link href=".." className="text-blue-600 hover:text-blue-800 inline-flex items-center mb-6">
+          <Link href="/" className="text-blue-600 hover:text-blue-800 inline-flex items-center mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Link>

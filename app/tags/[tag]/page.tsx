@@ -100,7 +100,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
           <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-soft-light"></div>
           <div className="relative p-8 text-white">
             <nav aria-label="Breadcrumb" className="mb-6">
-              <Link href="../.." className="text-white/80 hover:text-white inline-flex items-center">
+              <Link href="/" className="text-white/80 hover:text-white inline-flex items-center">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
               </Link>
@@ -125,7 +125,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
             >
               <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="p-6 h-full flex flex-col relative">
-                <Link href={`../../blog/${post.id}`} className="block mb-3">
+                <Link href={`/blog/${post.id}`} className="block mb-3">
                   <h2 className="text-xl font-semibold mb-2 text-gray-800 group-hover:text-purple-600 transition-colors font-montserrat" itemProp="headline">
                     {post.title}
                   </h2>
@@ -147,7 +147,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
                   </div>
                 )}
                 
-                <Link href={`../../blog/${post.id}`} className="block flex-grow">
+                <Link href={`/blog/${post.id}`} className="block flex-grow">
                   <p className="text-gray-600 mb-4" itemProp="description">{post.excerpt}</p>
                 </Link>
               </div>

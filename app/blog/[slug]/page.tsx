@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           
           <div className="p-8">
             <nav aria-label="Breadcrumb" className="mb-8">
-              <Link href="../.." className="text-purple-600 hover:text-purple-800 inline-flex items-center text-sm font-medium">
+              <Link href="/" className="text-purple-600 hover:text-purple-800 inline-flex items-center text-sm font-medium">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
               </Link>

@@ -1,14 +1,13 @@
 /** @type {import('next').NextConfig} */
 
 const bucketName = 'rewire-it';
-const isProd = process.env.NODE_ENV === 'production';
 
 // The basePath is the sub-path of the domain where the site is hosted.
-const basePath = isProd ? `/${bucketName}` : '';
+const basePath = `/${bucketName}`;
 
 // The assetPrefix is the full URL prefix for your assets.
 // This is needed for assets to load correctly from GCS.
-const assetPrefix = isProd ? `https://storage.googleapis.com/${bucketName}` : '';
+const assetPrefix = `https://storage.googleapis.com/${bucketName}`;
 
 const nextConfig = {
   /**
