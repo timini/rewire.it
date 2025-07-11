@@ -1,15 +1,16 @@
-import { Inter, Montserrat } from "next/font/google"
-import Header from "@/components/header"
-import "./globals.css"
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
+import Script from "next/script";
+import Header from "@/components/header";
+import "./globals.css";
+import { Inter, Montserrat } from 'next/font/google';
 
 // Load fonts
-const inter = Inter({ subsets: ["latin"], variable: '--font-inter' })
-const montserrat = Montserrat({ 
-  subsets: ["latin"], 
-  variable: '--font-montserrat',
-  display: 'swap' 
-})
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://rewire.it'),
@@ -48,29 +49,45 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" dir="ltr">
       <body
-        className={`${inter.variable} ${montserrat.variable} font-sans flex flex-col min-h-screen relative`}
+        className={`${inter.variable} ${montserrat.variable} font-sans flex flex-col min-h-screen`}
       >
-        {/* Single unified background element with no seams */}
+        {/* Background gradients */}
         <div className="fixed inset-0 w-full h-full bg-gradient-to-br from-purple-50 via-pink-50 to-purple-100 -z-10"></div>
-        
-        {/* Subtle gradient overlays with no hard edges */}
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(120,40,200,0.08),transparent_70%)]"></div>
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,100,150,0.08),transparent_70%)]"></div>
-        
+
         <Header />
-        <main className="flex-grow container mx-auto px-4 py-8 mt-14 relative z-10">{children}</main>
+
+        <main className="flex-grow container mx-auto px-4 py-8 mt-14 relative z-10">
+          {children}
+        </main>
+
         <footer className="bg-white/80 backdrop-blur-sm shadow-inner py-6 relative z-10">
           <div className="container mx-auto px-4 text-center text-gray-600">
             <p>© {new Date().getFullYear()} rewire.it. All rights reserved.</p>
           </div>
         </footer>
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-P0CLMZMKF8"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-P0CLMZMKF8');
+          `}
+        </Script>
       </body>
     </html>
-  )
+  );
 }
 
