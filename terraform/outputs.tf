@@ -11,4 +11,9 @@ output "gcp_service_account_email" {
 output "gcp_workload_identity_provider" {
   description = "The full name of the Workload Identity Provider."
   value       = google_iam_workload_identity_pool_provider.github_provider.name
+}
+
+output "load_balancer_ip" {
+  description = "The IP address of the global load balancer."
+  value       = google_compute_global_forwarding_rule.default.ip_address
 } 

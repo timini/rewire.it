@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && mkdir -p out/rewire-it && mv out/* out/rewire-it/ 2>/dev/null || true",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "generate-images": "node generatePostImages.mjs",

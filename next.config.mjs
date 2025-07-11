@@ -1,11 +1,4 @@
 /** @type {import('next').NextConfig} */
-
-const bucketName = 'rewire-it';
-
-// The assetPrefix is the full URL prefix for your assets.
-// This is needed for assets to load correctly from GCS.
-const assetPrefix = `https://storage.googleapis.com/${bucketName}`;
-
 const nextConfig = {
   /**
    * Enables static export for the app.
@@ -15,7 +8,6 @@ const nextConfig = {
    */
   output: 'export',
   trailingSlash: true,
-  assetPrefix: assetPrefix,
 };
 
 export default nextConfig;

@@ -33,18 +33,17 @@ resource "google_project_service" "storage" {
   service = "storage.googleapis.com"
 }
 
-# 2. Create the GCS bucket
+resource "google_project_service" "compute" {
+  service = "compute.googleapis.com"
+}
+
+# 2. Create the GCS bucket for the website content
+# This bucket is now private and serves content through the Load Balancer.
 resource "google_storage_bucket" "website_bucket" {
-  name          = var.project_id # Using project ID for the bucket name for uniqueness
-  location      = var.gcp_location
-  force_destroy = false # Set to true if you want to delete buckets with content
-
+  name                        = var.project_id
+  location                    = var.gcp_location
+  force_destroy               = true # Be cautious with this in production
   uniform_bucket_level_access = true
-
-  website {
-    main_page_suffix = "index.html"
-    not_found_page   = "404.html"
-  }
 }
 
 # 3. Create a Service Account for GitHub Actions
@@ -53,14 +52,12 @@ resource "google_service_account" "github_actions_sa" {
   display_name = "GitHub Actions Service Account"
 }
 
-# 4. Create a Workload Identity Pool
+# 4. Create Workload Identity Federation for GitHub Actions
 resource "google_iam_workload_identity_pool" "github_pool" {
-  project                   = var.project_id
   workload_identity_pool_id = "github-actions-pool"
   display_name              = "GitHub Workload Identity Pool"
 }
 
-# 5. Create a Workload Identity Provider for the specific GitHub repo
 resource "google_iam_workload_identity_pool_provider" "github_provider" {
   workload_identity_pool_id          = google_iam_workload_identity_pool.github_pool.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-provider"
@@ -76,30 +73,52 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
   }
 }
 
-# 6. Allow the GitHub provider to impersonate the service account
+# 5. Grant permissions for the Service Account
+# Allow GitHub Actions to impersonate the service account
 resource "google_service_account_iam_member" "workload_identity_user" {
   service_account_id = google_service_account.github_actions_sa.name
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/${var.github_repo}"
 }
 
-# 7. Grant the Service Account permissions to manage the GCS bucket
+# Grant the Service Account permissions to upload to the GCS bucket
 resource "google_storage_bucket_iam_member" "storage_admin" {
   bucket = google_storage_bucket.website_bucket.name
-  role   = "roles/storage.admin"
+  role   = "roles/storage.objectAdmin" # More specific role than storage.admin
   member = "serviceAccount:${google_service_account.github_actions_sa.email}"
 }
 
-# 8. Grant public read access to all objects in the bucket
-resource "google_storage_bucket_iam_member" "public_access" {
-  bucket = google_storage_bucket.website_bucket.name
-  role   = "roles/storage.objectViewer"
-  member = "allUsers"
-}
-
-# 9. Allow the service account to create access tokens for itself
+# Grant the Service Account permissions to create its own tokens
 resource "google_service_account_iam_member" "token_creator_self" {
   service_account_id = google_service_account.github_actions_sa.name
   role               = "roles/iam.serviceAccountTokenCreator"
   member             = "serviceAccount:${google_service_account.github_actions_sa.email}"
+}
+
+# --- Global Load Balancer and CDN ---
+
+# 6. Create a backend bucket for the Load Balancer
+resource "google_compute_backend_bucket" "website_backend" {
+  name        = "${var.project_id}-backend-bucket"
+  bucket_name = google_storage_bucket.website_bucket.name
+  enable_cdn  = true
+}
+
+# 7. Create a URL map to route all traffic to the backend bucket
+resource "google_compute_url_map" "default" {
+  name            = "${var.project_id}-url-map"
+  default_service = google_compute_backend_bucket.website_backend.id
+}
+
+# 8. Create an HTTP proxy to route requests to the URL map
+resource "google_compute_target_http_proxy" "default" {
+  name    = "${var.project_id}-http-proxy"
+  url_map = google_compute_url_map.default.id
+}
+
+# 9. Create a global forwarding rule to handle and forward incoming requests
+resource "google_compute_global_forwarding_rule" "default" {
+  name       = "${var.project_id}-forwarding-rule"
+  target     = google_compute_target_http_proxy.default.id
+  port_range = "80"
 } 
