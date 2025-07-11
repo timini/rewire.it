@@ -2,9 +2,6 @@
 
 const bucketName = 'rewire-it';
 
-// The basePath is the sub-path of the domain where the site is hosted.
-const basePath = `/${bucketName}`;
-
 // The assetPrefix is the full URL prefix for your assets.
 // This is needed for assets to load correctly from GCS.
 const assetPrefix = `https://storage.googleapis.com/${bucketName}`;
@@ -18,7 +15,6 @@ const nextConfig = {
    */
   output: 'export',
   trailingSlash: true,
-  basePath: basePath,
   assetPrefix: assetPrefix,
 };
 

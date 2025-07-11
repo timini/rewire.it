@@ -67,7 +67,7 @@ jobs:
       uses: 'google-github-actions/upload-cloud-storage@v2.2.0'
       with:
         parent: false
-        path: 'out' # The directory produced by `next build` with `output: 'export'`
+        path: 'out/rewire-it' # The directory produced by `next build` with `output: 'export'`
         destination: '${{ secrets.GCP_BUCKET_NAME }}' # The GCS bucket to deploy to
         glob: '**' # Upload all files in the source directory
 
