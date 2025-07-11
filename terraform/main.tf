@@ -102,6 +102,9 @@ resource "google_compute_backend_bucket" "website_backend" {
   name        = "${var.project_id}-backend-bucket"
   bucket_name = google_storage_bucket.website_bucket.name
   enable_cdn  = true
+  depends_on = [
+    google_project_service.compute
+  ]
 }
 
 # 7. Create a URL map to route all traffic to the backend bucket
