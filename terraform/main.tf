@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/google"
       version = "~> 5.0"
     }
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
   }
 }
 
@@ -93,6 +97,13 @@ resource "google_service_account_iam_member" "token_creator_self" {
   service_account_id = google_service_account.github_actions_sa.name
   role               = "roles/iam.serviceAccountTokenCreator"
   member             = "serviceAccount:${google_service_account.github_actions_sa.email}"
+}
+
+# Make the bucket publicly readable for the website
+resource "google_storage_bucket_iam_member" "public_reader" {
+  bucket = google_storage_bucket.website_bucket.name
+  role   = "roles/storage.objectViewer"
+  member = "allUsers"
 }
 
 # --- Global Load Balancer and CDN ---
