@@ -12,7 +12,7 @@ const nextConfig = {
    */
   output: 'export',
   trailingSlash: true,
-  assetPrefix: isProd ? `https://storage.googleapis.com/${bucketName}` : undefined,
+  basePath: isProd ? `/${bucketName}` : '',
 };
 
 export default nextConfig;
