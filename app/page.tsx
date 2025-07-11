@@ -81,7 +81,7 @@ export default function HomePage() {
               <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/tags"
+              href="tags"
               className="inline-flex items-center px-6 py-3 bg-purple-700/30 backdrop-blur-sm text-white rounded-full hover:bg-purple-700/40 transition-colors font-medium"
             >
               Browse Topics
@@ -96,7 +96,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-gray-800 font-montserrat">
             Popular Topics
           </h2>
-          <Link href="/tags" className="text-purple-600 hover:text-purple-700 flex items-center text-sm font-medium">
+          <Link href="tags" className="text-purple-600 hover:text-purple-700 flex items-center text-sm font-medium">
             View all topics
             <ArrowUpRight className="ml-1 h-3 w-3" />
           </Link>
@@ -123,7 +123,7 @@ export default function HomePage() {
             >
               <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="p-6 h-full flex flex-col relative">
-                <Link href={`/blog/${post.id}`} className="block mb-3">
+                <Link href={`blog/${post.id}`} className="block mb-3">
                   <h3 className="text-xl font-semibold mb-2 text-gray-800 group-hover:text-purple-600 transition-colors font-montserrat" itemProp="headline">
                     {post.title}
                   </h3>
@@ -143,7 +143,7 @@ export default function HomePage() {
                   )}
                 </div>
                 
-                <Link href={`/blog/${post.id}`} className="block flex-grow">
+                <Link href={`blog/${post.id}`} className="block flex-grow">
                   <p className="text-gray-600 mb-4" itemProp="description">{post.excerpt}</p>
                 </Link>
                 

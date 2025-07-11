@@ -16,7 +16,7 @@ const Tag: FC<TagProps> = ({ name, count, className = '' }) => {
   };
 
   // Ensure consistent URL format for tags
-  const tagUrl = `/tags/${encodeURIComponent(name.toLowerCase().replace(/\s+/g, '-'))}`;
+  const tagUrl = `tags/${encodeURIComponent(name.toLowerCase().replace(/\s+/g, '-'))}`;
   
   return (
     <Link 
