@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+
+const bucketName = process.env.GCP_BUCKET_NAME || 'rewire-it';
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   /**
    * Enables static export for the app.
@@ -8,6 +12,7 @@ const nextConfig = {
    */
   output: 'export',
   trailingSlash: true,
+  assetPrefix: isProd ? `https://storage.googleapis.com/${bucketName}` : undefined,
 };
 
 export default nextConfig;

@@ -59,6 +59,8 @@ jobs:
 
     - name: Build Static Site
       run: npm run build
+      env:
+        GCP_BUCKET_NAME: ${{ secrets.GCP_BUCKET_NAME }}
 
     - name: Deploy to Google Cloud Storage
       id: deploy
