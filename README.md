@@ -61,7 +61,19 @@ After completing these steps, your infrastructure is ready, and the CI/CD pipeli
 
 ## Getting Started with Development
 
-First, run the development server:
+### Environment Variables
+
+Before running the development server, you'll need to set up your local environment variables. Copy the example file and fill in the required values:
+
+```bash
+cp .env.example .env
+```
+
+Open the newly created `.env` file and provide a valid Google Analytics ID for the `NEXT_PUBLIC_GA_ID` variable.
+
+### Running the Server
+
+Once your environment variables are configured, you can run the development server:
 
 ```bash
 npm run dev
