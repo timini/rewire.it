@@ -3,6 +3,7 @@ title: "The Procrastinator's Paradox: How AI Fuels a Cycle of Unfinished Side Pr
 date: '2025-09-03'
 tags: ['ai', 'procrastination']
 excerpt: "The rise of powerful AI assistants has bulldozed the traditional hiding places for developer procrastination, creating a newer, more insidious trap: a high-speed loop of endless beginnings. This post explores the psychology of AI-fueled procrastination and offers an antidote to this modern cycle of unfinished side projects."
+readTime: '5 min read'
 ---
 
 
