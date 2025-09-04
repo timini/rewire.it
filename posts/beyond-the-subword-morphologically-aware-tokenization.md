@@ -3,6 +3,7 @@ title: "Beyond the Subword: A Deep Dive into Morphologically-Aware Tokenization 
 date: "2025-01-27"
 tags: ["nlp", "tokenization", "morphology", "linguistics", "ai", "language-models"]
 excerpt: "An exploration of how morphologically-aware tokenization addresses the limitations of current statistical approaches, especially for morphologically rich languages, and its implications for the future of language model development."
+readTime: '21 min read'
 ---
 
 # Beyond the Subword: A Deep Dive into Morphologically-Aware Tokenization for Modern Language Models
