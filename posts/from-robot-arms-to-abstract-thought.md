@@ -1,6 +1,6 @@
 ---
 title: "From Robot Arms to Abstract Thought: A New Approach to AI Language Training"
-date: "2024-03-15"
+date: "2025-04-02"
 readTime: "10 min read"
 excerpt: "Exploring a new approach to AI language training that grounds language in physical interactions and leverages abstraction for deeper understanding."
 tags: ["AI", "Robotics", "Language", "Embodiment", "Abstraction"]

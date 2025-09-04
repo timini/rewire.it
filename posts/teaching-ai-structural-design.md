@@ -1,6 +1,6 @@
 ---
 title: "Teaching AI to Keep Buildings Standing: Reinforcement Learning and Physics-Informed Design"
-date: "2024-07-30" # Adjust date if needed
+date: "2025-07-08" # Adjust date if needed
 readTime: "7 min read" # Estimated read time
 excerpt: "Exploring how Reinforcement Learning (RL) combined with Physics-Informed Machine Learning (PIML) can teach AI to design structurally sound and resilient buildings by learning from simulated physical environments."
 tags: ["AI", "Reinforcement Learning", "Architecture", "Structural Engineering", "Physics", "Simulation", "PIDRL", "PIML"]

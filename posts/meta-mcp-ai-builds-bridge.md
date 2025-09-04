@@ -1,6 +1,6 @@
 ---
 title: "Meta MCP: When AI Builds Its Own Bridge to the World"
-date: "2024-07-30" # Adjust date if needed
+date: "2025-07-08" # Adjust date if needed
 readTime: "4 min read" # Estimated read time
 excerpt: "Delving into the concept of Meta MCP, where Large Language Models generate both a user interface and a backend server, enabling them to interact persistently and dynamically beyond simple request-response cycles."
 tags: ["AI", "LLM", "Software Architecture", "Meta", "Agent", "Future Tech"]

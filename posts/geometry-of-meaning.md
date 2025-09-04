@@ -1,6 +1,6 @@
 ---
 title: "The Geometry of Meaning: How High-Dimensional Vectors are Reshaping Our Understanding of Language"
-date: "2024-07-27" # Assuming today's date, adjust if needed
+date: "2025-04-02" # Assuming today's date, adjust if needed
 readTime: "12 min read" # Estimated read time, adjust as necessary
 excerpt: "Exploring how vector space models are changing our understanding of language, meaning, and cognition, bridging computer science, linguistics, and philosophy."
 tags: ["AI", "Language", "Philosophy", "Vectors", "Cognitive Science"]

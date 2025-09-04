@@ -1,6 +1,6 @@
 ---
 title: "Simulating the Impossible: Building an Open-Source Horn Design Pipeline with AI"
-date: "2024-07-31"
+date: "2025-07-08"
 readTime: "6 min read"
 excerpt: "A look at how I built an open-source acoustic horn design pipeline using Nextflow, FEniCSx, and AI development tools to overcome the limitations of legacy software."
 tags: ["AI", "Acoustics", "Open Source", "FEM", "Simulation", "Nextflow", "Python"]
